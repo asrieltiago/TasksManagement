@@ -1,5 +1,10 @@
 package com.asrieltiago.tasksmanagement.ui.task_list
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,7 +15,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -19,6 +23,8 @@ import com.asrieltiago.tasksmanagement.util.UiEvent
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @OptIn(InternalCoroutinesApi::class)
 @Composable
 fun TaskListScreen(
@@ -71,16 +77,22 @@ fun TaskListScreen(
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(tasks.value) { task ->
-                    TaskItem(
-                        task = task,
-                        onEvent = viewModel::onEvent,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                viewModel.onEvent(TasksEvent.OnTaskClick(task))
-                            }
-                            .padding(16.dp)
-                    )
+                    AnimatedVisibility(
+                        visible = !task.isVisible,
+                        exit = fadeOut(
+                            animationSpec = TweenSpec(200, 200, FastOutLinearInEasing)
+                        )
+                    ) {
+                        TaskItem(
+                            task = task,
+                            onEvent = viewModel::onEvent,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    viewModel.onEvent(TasksEvent.OnTaskClick(task))
+                                }.padding(16.dp)
+                        )
+                    }
                 }
             }
         }

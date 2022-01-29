@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.asrieltiago.tasksmanagement.data.local.TaskRepository
 import com.asrieltiago.tasksmanagement.data.model.Task
 import com.asrieltiago.tasksmanagement.util.Routes
+import com.asrieltiago.tasksmanagement.util.SnackbarType
 import com.asrieltiago.tasksmanagement.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -19,7 +20,7 @@ class TasksViewModel @Inject constructor(
 
     val tasks = repository.getTasks()
 
-    private val _uiEvent = Channel<UiEvent>()
+    private val _uiEvent = Channel<UiEvent>(Channel.Factory.CONFLATED)
     val uiEvent = _uiEvent.receiveAsFlow()
 
     private var deletedTask: Task? = null
@@ -44,10 +45,7 @@ class TasksViewModel @Inject constructor(
                     repository.deleteTask(event.task)
 
                     sendUiEvent(
-                        UiEvent.ShowSnackbar(
-                            message = "Tarefa deletada",
-                            action = "Desfazer"
-                        )
+                        UiEvent.ShowSnackbar(type = SnackbarType.Delete)
                     )
                 }
             }

@@ -3,6 +3,8 @@ package com.asrieltiago.tasksmanagement
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,39 +19,46 @@ import com.asrieltiago.tasksmanagement.ui.theme.TasksManagementTheme
 import com.asrieltiago.tasksmanagement.util.Routes
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalMaterialApi
+@OptIn(ExperimentalAnimationApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             TasksManagementTheme {
-                val navController = rememberNavController()
+                AppNavigation()
+            }
+        }
+    }
 
-                NavHost(
-                    navController = navController,
-                    startDestination = Routes.TASKS_LIST
-                ) {
-                    composable(Routes.TASKS_LIST) {
-                        TaskListScreen(
-                            onNavigate = {
-                                navController.navigate(it.route)
-                            }
-                        )
+    @Composable
+    private fun AppNavigation() {
+        val navController = rememberNavController()
+
+        NavHost(
+            navController = navController,
+            startDestination = Routes.TASKS_LIST
+        ) {
+            composable(Routes.TASKS_LIST) {
+                TaskListScreen(
+                    onNavigate = {
+                        navController.navigate(it.route)
                     }
-                    composable(
-                        Routes.ADD_EDIT_TASK + "?taskId={taskId}",
-                        arguments = listOf(
-                            navArgument(name = "taskId") {
-                                type = NavType.IntType
-                                defaultValue = -1
-                            }
-                        )
-                    ) {
-                        AddEditTaskScreen(onPopBackstack = {
-                            navController.popBackStack()
-                        })
+                )
+            }
+            composable(
+                Routes.ADD_EDIT_TASK + "?taskId={taskId}",
+                arguments = listOf(
+                    navArgument(name = "taskId") {
+                        type = NavType.IntType
+                        defaultValue = -1
                     }
-                }
+                )
+            ) {
+                AddEditTaskScreen(onPopBackstack = {
+                    navController.popBackStack()
+                })
             }
         }
     }

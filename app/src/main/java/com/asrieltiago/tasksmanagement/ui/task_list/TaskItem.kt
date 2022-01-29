@@ -21,8 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.asrieltiago.tasksmanagement.R
 import com.asrieltiago.tasksmanagement.data.model.Task
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -46,7 +48,7 @@ fun TaskItem(
         DisposableEffect(Unit) {
             onDispose {
                 scope.launch {
-                    delay(2000L)
+                    delay(4000L)
                     swipeableState.snapTo(0)
                 }
             }
@@ -85,7 +87,7 @@ fun TaskItem(
             ) {
                 Icon(
                     imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete item",
+                    contentDescription = stringResource(R.string.delete_item),
                     tint = Color.White
                 )
             }

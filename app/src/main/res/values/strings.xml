@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">TasksManagement</string>
+    <string name="app_name">Tarefas Diárias</string>
+    <string name="add">Adicionar</string>
+    <string name="your_daily_tasks">Suas Tarefas Diárias</string>
+    <string name="task_deleted">Tarefa deletada</string>
+    <string name="undo">Desfazer</string>
+    <string name="error_empty_title">O título não pode ser vazio.</string>
+    <string name="edit_task">Editar Tarefa</string>
+    <string name="create_new_task">Criar Nova Tarefa</string>
+    <string name="save">Salvar</string>
+    <string name="title">Título</string>
+    <string name="description">Descrição</string>
+    <string name="empty_tasks_message">Você ainda não possui nenhuma tarefa. \nQue tal criar a primeira?</string>
+    <string name="delete_item">Delete item</string>
+    <string name="back">Voltar</string>
 </resources>

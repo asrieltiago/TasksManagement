@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asrieltiago.tasksmanagement.data.local.TaskRepository
 import com.asrieltiago.tasksmanagement.data.model.Task
+import com.asrieltiago.tasksmanagement.util.SnackbarType
 import com.asrieltiago.tasksmanagement.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -54,12 +55,15 @@ class AddEditTaskViewModel @Inject constructor(
     fun onEvent(event: AddEditTaskEvent) {
         when (event) {
             is AddEditTaskEvent.OnDescriptionChange -> description = event.description
+            is AddEditTaskEvent.OnBackClick -> viewModelScope.launch {
+                sendUiEvent(UiEvent.PopBackstack)
+            }
             is AddEditTaskEvent.OnSaveTaskClick -> {
                 viewModelScope.launch {
                     if (title.isBlank()) {
                         sendUiEvent(
                             UiEvent.ShowSnackbar(
-                                message = "O título não pode ser vazio",
+                                type = SnackbarType.Error
                             )
                         )
                         return@launch

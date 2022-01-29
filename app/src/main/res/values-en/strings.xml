@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Daily Tasks</string>
+    <string name="add">Add</string>
+    <string name="your_daily_tasks">Your Daily Tasks</string>
+    <string name="task_deleted">Task deleted</string>
+    <string name="undo">Undo</string>
+    <string name="error_empty_title">Title cannot be empty.</string>
+    <string name="edit_task">Edit task</string>
+    <string name="create_new_task">Create New Task</string>
+    <string name="save">Save</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="empty_tasks_message">You don\'t have any tasks yet. \nHow about creating the first one?</string>
+    <string name="delete_item">Delete item</string>
+    <string name="back">Back</string>
+</resources>
